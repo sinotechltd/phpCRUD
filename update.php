@@ -2,39 +2,38 @@
 include_once 'conn.php';
 
 if (isset($_GET['updateid'])) {
-$id = $_GET['updateid'];
-$sql= "select * FROM `seriescrud` where id= $id";
-$result= mysqli_query($con,$sql);
+    $id = $_GET['updateid'];
+    $sql = "select * FROM `seriescrud` where id= $id";
+    $result = mysqli_query($con, $sql);
 
-$row=mysqli_fetch_assoc($result);
-    $fname= $row['fname'];
-    $lname= $row['lname'];
-    $email= $row['email'];
-    $mobile=$row['mobile'];
-    $datas=$row['multipleData'];
+    $row = mysqli_fetch_assoc($result);
+    $fname = $row['fname'];
+    $lname = $row['lname'];
+    $email = $row['email'];
+    $mobile = $row['mobile'];
+    $datas = $row['multipleData'];
+    $place = $row['place'];
+    if (isset($_POST['update'])) {
+        // $id = $_GET['updateid'];
+        $fname = $_POST['fname'];
+        $lname = $_POST['lname'];
+        $email = $_POST['email'];
+        $mobile = $_POST['mobile'];
+        $datas = $_POST['data'];
+        $allData = implode(",", $datas);
+        $gender=$_POST['gender'];
+        $place=$_POST['place'];
+        $sql = "update `seriescrud`  set fname= '$fname', lname='$lname', email='$email', mobile='$mobile', multipleData='$allData', gender='$gender', place='$place'  where id='$id' ";
+        $result = mysqli_query($con, $sql);
 
-if(isset($_POST['update'])){
-    // $id = $_GET['updateid'];
-    $fname= $_POST['fname'];
-    $lname= $_POST['lname'];
-    $email= $_POST['email'];
-    $mobile=$_POST['mobile'];
-    $datas = $_POST['data'];
-
-    // convert the data array into string
-    $allData = implode(",", $datas);
-
-    $sql= "update `seriescrud`  set fname= '$fname', lname='$lname', email='$email', mobile='$mobile', multipleData='$allData' where id='$id' ";
-    $result= mysqli_query($con,$sql);
-
-    if($result){
-        header('location: read.php');
-        // echo "updated successfully";
-    }else{
-        die(mysqli_error($con));
+        if ($result) {
+            header('location: read.php');
+            // echo "updated successfully";
+        } else {
+            die(mysqli_error($con));
+        }
     }
 }
-} 
 ?>
 
 
@@ -57,7 +56,7 @@ if(isset($_POST['update'])){
             </div>
             <div class="form-group mb-3">
                 <label> Last Name</label>
-                <input type="text" class="form-control" name="lname"value="<?php echo $lname; ?>">
+                <input type="text" class="form-control" name="lname" value="<?php echo $lname; ?>">
             </div>
             <div class="form-group mb-3">
                 <label> Email</label>
@@ -68,9 +67,23 @@ if(isset($_POST['update'])){
                 <input type="text" class="form-control" name="mobile" value="<?php echo $mobile; ?>">
             </div>
             <div>
-            <input type="checkbox" name="data[]" value="Javascript">Javascript
-        <input type="checkbox" name="data[]" value="HTML">HTML
-        <input type="checkbox" name="data[]" value="CSS">CSS
+                <input type="checkbox" name="data[]" value="Javascript">Javascript
+                <input type="checkbox" name="data[]" value="HTML">HTML
+                <input type="checkbox" name="data[]" value="CSS">CSS
+            </div>
+            <div class="my-3">
+                Gender:
+                <input type="radio" name="gender" value="male">Male
+                <input type="radio" name="gender" value="female">Female
+            </div>
+            <div class="my-3">
+                <select name="place" id="">
+                    <option value="">Select City</option>
+                    <option value="Meru">Meru</option>
+                    <option value="Machcakos">Machcakos</option>
+                    <option value="Kisii">Kisii</option>
+                    <option value="Nyamira">Nyamira</option>
+                </select>
             </div>
             <button type="submit" class="btn btn-dark btn-lg my-3" name="update">Update</button>
             <button type="button" class="btn btn-dark btn-lg" name=""><a href="read.php">Back</a></button>

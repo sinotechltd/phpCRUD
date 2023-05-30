@@ -12,7 +12,7 @@ include_once 'conn.php'
     <title>DISPLAY DATA</title>
 </head>
 <body>
-    <div class="container">
+    <div class="container my-5">
     <table class="table">
   <thead>
     <tr>
@@ -22,6 +22,8 @@ include_once 'conn.php'
       <th scope="col">Email</th>
       <th scope="col">Mobile</th>
       <th scope="col">Subjects</th>
+      <th scope="col">Gender</th>
+      <th scope="col">County</th>
       <th scope="col">Operators</th>
     </tr>
   </thead>
@@ -45,7 +47,9 @@ include_once 'conn.php'
      <td>'.$row['email'].'</td>
      <td>'.$row['mobile'].'</td>
      <td>'.$row['multipleData'].'</td>
-     <td>
+     <td>'.$row['gender'].'</td>
+     <td>'.$row['place'].'</td>
+    <td>
     <a href="update.php?updateid='.$id.'" class="btn btn-dark">Update</a>
     <a href="delete.php?deleteid='.$id.'" class="btn btn-danger">Delete</a>
   </td>
